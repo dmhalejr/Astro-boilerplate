@@ -15,9 +15,12 @@ const Hero = () => {
         }
         description={
           <>
-            Developer working in Nashville, Tennessee, USA with a focus in
-            creating seamless user experiences and enhancing velocity on
-            cross-skilled teams
+            Day to day you'll find me working at{' '}
+            <a href="https://www.onestudyteam.com/" target="_blank">
+              <GradientText>OneStudyTeam</GradientText>
+            </a>{' '}
+            as a Senior Software Engineer. This site is leveraged as portfolio,
+            blog, and more. Thanks for stopping by!
           </>
         }
         avatar={<div className="h-80 w-64" />}
