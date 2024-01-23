@@ -4,7 +4,6 @@ import type {
   IFrontmatter,
 } from 'astro-boilerplate-components';
 import {
-  BlogGallery,
   NewerOlderPagination,
   PaginationHeader,
   Section,
@@ -13,6 +12,8 @@ import {
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
 import { sortByDate } from '@/utils/Posts';
+import { BlogGallery } from '@/partials/BlogGallery';
+
 
 type GetStaticPaths = {
   paginate: any;
@@ -40,7 +41,7 @@ const description =
 
 <Base head={{ title, description }}>
   <Section>
-    <PaginationHeader title='Posts' description='Musings' />
+    <PaginationHeader title='Blog' description='Musings' />
   </Section>
 
   <Section>
