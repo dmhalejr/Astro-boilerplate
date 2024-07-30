@@ -16,11 +16,11 @@ const Hero = () => {
         description={
           <>
             Day to day you'll find me working at{' '}
-            <a href="https://www.onestudyteam.com/" target="_blank">
-              <GradientText>OneStudyTeam</GradientText>
+            <a href="https://careaccess.com/" target="_blank">
+              <GradientText>Care Access</GradientText>
             </a>{' '}
-            as a Senior Software Engineer. This site is leveraged as portfolio,
-            blog, and more. Thanks for stopping by!
+            as a Full-Stack Senior Software Engineer. This site is leveraged as
+            portfolio, blog, and more. Thanks for stopping by!
           </>
         }
         avatar={<div className="h-80 w-64" />}
