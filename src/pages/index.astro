@@ -1,25 +1,27 @@
 ---
-import type { IFrontmatter } from 'astro-boilerplate-components';
+// import type { IFrontmatter } from 'astro-boilerplate-components';
 
-// import { CTA } from '@/partials/CTA';
 import { Hero } from '@/partials/Hero';
-import { RecentPosts } from '@/partials/RecentPosts';
-// import { ProjectList } from '@/partials/ProjectList';
+// import { RecentPosts } from '@/partials/RecentPosts';
+import { Stats } from '@/partials/Stats';
+import { ValueProps } from '@/partials/ValueProps';
 import Base from '@/templates/Base.astro';
+// import { CTA } from '@/partials/CTA';
 import { AppConfig } from '@/utils/AppConfig';
-import { sortByDate } from '@/utils/Posts';
+// import { sortByDate } from '@/utils/Posts';
+// import { ProjectList } from '@/partials/ProjectList';
 
-const allPosts = await Astro.glob<IFrontmatter>('./blog/*.md');
-const sortedPosts = sortByDate(allPosts);
-const lastThreePosts = sortedPosts.slice(0, 3);
-
-const { title } = AppConfig;
-const { description } = AppConfig;
+// const allPosts = await Astro.glob<IFrontmatter>('./blog/*.md');
+// const sortedPosts = sortByDate(allPosts);
+// const recentPosts = sortedPosts.slice(0, 3);
+const { title, description } = AppConfig;
 ---
 
 <Base head={{ title, description }}>
   <Hero />
-  <RecentPosts postList={lastThreePosts} />
+  <Stats />
+  <ValueProps />
+  <!-- <RecentPosts postList={recentPosts} /> -->
   <!-- <ProjectList /> -->
   <!-- <CTA /> -->
 </Base>

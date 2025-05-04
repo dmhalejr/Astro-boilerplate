@@ -9,7 +9,7 @@ import { astroImageTools } from 'astro-imagetools';
 export default defineConfig({
   // base: '.', // Set a path prefix.
   site: 'https://halestorm.dev/', // Use to generate your sitemap and canonical URLs in your final build.
-  trailingSlash: 'always', // Use to always append '/' at end of url
+  trailingSlash: 'never', // Use to always append '/' at end of url
   markdown: {
     shikiConfig: {
       // Choose from Shiki's built-in themes (or add your own)
