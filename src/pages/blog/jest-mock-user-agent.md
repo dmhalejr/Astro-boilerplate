@@ -1,7 +1,7 @@
 ---
 layout: '@/templates/BasePost.astro'
 title: Jest Mock UserAgent
-description: null
+description: How to mock global.navigator.userAgent in Jest for testing browser-specific behavior.
 pubDate: 2019-12-21T22:12:03.284Z
 ---
 

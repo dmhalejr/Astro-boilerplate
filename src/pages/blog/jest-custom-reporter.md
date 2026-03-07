@@ -1,7 +1,7 @@
 ---
 layout: '@/templates/BasePost.astro'
 title: Jest Custom Reporter
-description: null
+description: How to create custom Jest reporters for enhanced test traceability and integration with tools like Sauce Labs.
 pubDate: 2019-02-25T22:12:03.284Z
 ---
 
