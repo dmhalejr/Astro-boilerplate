@@ -34,6 +34,12 @@ const Navbar = () => {
               >
                 Blog
               </a>
+              <a
+                href="/projects"
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+              >
+                Projects
+              </a>
               {/* <a
                 href="/contact"
                 className="rounded-md bg-gradient-to-r from-purple-600 to-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-90"
@@ -106,6 +112,12 @@ const Navbar = () => {
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
             >
               Blog
+            </a>
+            <a
+              href="/projects"
+              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              Projects
             </a>
             {/* <a
               href="/contact"
