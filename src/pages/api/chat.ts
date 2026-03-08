@@ -18,7 +18,9 @@ if (import.meta.env.DEV) {
 
 function isOriginAllowed(request: Request): boolean {
   const origin = request.headers.get('origin');
-  if (!origin) return false;
+  // No Origin header → same-origin or non-browser client; allow it
+  // (CSRF token protects POST regardless)
+  if (!origin) return true;
   if (ALLOWED_ORIGINS.includes(origin)) return true;
   // Allow Netlify deploy previews (e.g. deploy-preview-6--tranquil-monstera-7220a9.netlify.app)
   try {
