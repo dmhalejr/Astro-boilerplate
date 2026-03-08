@@ -84,14 +84,14 @@ const ChatWidget = () => {
       {isOpen && (
         <div className="fixed bottom-20 right-4 z-50 flex h-[500px] w-[384px] max-w-[calc(100vw-2rem)] flex-col rounded-2xl border border-slate-700 bg-slate-800 shadow-2xl sm:right-6">
           {/* Header */}
-          <div className="flex items-center justify-between rounded-t-2xl bg-gradient-to-r from-purple-600 to-blue-600 px-4 py-3">
-            <h3 className="text-sm font-semibold text-white">
+          <div className="flex items-center justify-between rounded-t-2xl bg-gradient-to-br from-sky-500 to-cyan-400 px-4 py-3">
+            <h3 className="text-sm font-semibold text-slate-900">
               Ask me anything
             </h3>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white"
+              className="text-slate-900/70 hover:text-slate-900"
               aria-label="Close chat"
             >
               <svg
@@ -128,7 +128,7 @@ const ChatWidget = () => {
                 <div
                   className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${
                     msg.role === 'user'
-                      ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white'
+                      ? 'bg-gradient-to-br from-sky-500 to-cyan-400 text-slate-900'
                       : 'bg-slate-700 text-gray-200'
                   }`}
                 >
@@ -175,13 +175,13 @@ const ChatWidget = () => {
                 onKeyDown={handleKeyDown}
                 placeholder="Type a message..."
                 disabled={isLoading}
-                className="flex-1 rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:opacity-50"
+                className="flex-1 rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 disabled:opacity-50"
               />
               <button
                 type="button"
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
-                className="rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 px-3 py-2 text-sm text-white hover:opacity-90 disabled:opacity-50"
+                className="rounded-lg bg-gradient-to-br from-sky-500 to-cyan-400 px-3 py-2 text-sm text-slate-900 hover:opacity-90 disabled:opacity-50"
                 aria-label="Send message"
               >
                 <svg
@@ -207,7 +207,7 @@ const ChatWidget = () => {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg transition-transform hover:scale-105 hover:opacity-90 sm:right-6"
+        className="fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-cyan-400 text-slate-900 shadow-lg transition-transform hover:scale-105 hover:opacity-90 sm:right-6"
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         {isOpen ? (
