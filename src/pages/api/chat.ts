@@ -19,7 +19,15 @@ if (import.meta.env.DEV) {
 function isOriginAllowed(request: Request): boolean {
   const origin = request.headers.get('origin');
   if (!origin) return false;
-  return ALLOWED_ORIGINS.includes(origin);
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Allow Netlify deploy previews (e.g. deploy-preview-6--tranquil-monstera-7220a9.netlify.app)
+  try {
+    const url = new URL(origin);
+    if (url.hostname.endsWith('.netlify.app')) return true;
+  } catch {
+    // invalid origin
+  }
+  return false;
 }
 
 // CSRF token: HMAC of the date (rotates daily) signed with the API key.
