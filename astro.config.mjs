@@ -3,7 +3,6 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import robotsTxt from 'astro-robots-txt';
-import { astroImageTools } from 'astro-imagetools';
 import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
