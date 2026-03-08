@@ -1,6 +1,7 @@
 ---
 import { Footer } from '@/partials/Footer';
 import { Navbar } from '@/partials/Navbar';
+import { ChatWidget } from '@/components/ChatWidget';
 import { AppConfig } from '@/utils/AppConfig';
 
 export interface Props {
@@ -32,5 +33,6 @@ const {
     <slot></slot>
 
     <Footer />
+    <ChatWidget client:load />
   </body>
 </html>
