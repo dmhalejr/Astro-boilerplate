@@ -11,11 +11,26 @@ const ChatWidget = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Fetch CSRF token when widget is first opened
+  useEffect(() => {
+    if (isOpen && !csrfToken) {
+      fetch('/api/chat')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.token) setCsrfToken(data.token);
+        })
+        .catch(() => {
+          /* token fetch failed — will show error on send */
+        });
+    }
+  }, [isOpen, csrfToken]);
 
   const sendMessage = async () => {
     const trimmed = input.trim();
@@ -31,7 +46,10 @@ const ChatWidget = () => {
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(csrfToken ? { 'x-csrf-token': csrfToken } : {}),
+        },
         body: JSON.stringify({ messages: updatedMessages }),
       });
 

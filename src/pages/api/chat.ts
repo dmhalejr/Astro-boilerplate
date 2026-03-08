@@ -1,7 +1,47 @@
 import type { APIRoute } from 'astro';
 import Anthropic from '@anthropic-ai/sdk';
+import { createHmac } from 'node:crypto';
 
 export const prerender = false;
+
+// --- Security ---
+
+const ALLOWED_ORIGINS = [
+  'https://halestorm.dev',
+  'https://www.halestorm.dev',
+];
+
+// Allow localhost in development
+if (import.meta.env.DEV) {
+  ALLOWED_ORIGINS.push('http://localhost:4321', 'http://localhost:3000');
+}
+
+function isOriginAllowed(request: Request): boolean {
+  const origin = request.headers.get('origin');
+  if (!origin) return false;
+  return ALLOWED_ORIGINS.includes(origin);
+}
+
+// CSRF token: HMAC of the date (rotates daily) signed with the API key.
+// The client fetches a token from GET /api/chat before sending messages.
+function generateCsrfToken(): string {
+  const secret = import.meta.env.ANTHROPIC_API_KEY || 'fallback';
+  const dateKey = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  return createHmac('sha256', secret).update(`csrf-${dateKey}`).digest('hex').slice(0, 32);
+}
+
+function isValidCsrfToken(token: string | null): boolean {
+  if (!token) return false;
+  const expected = generateCsrfToken();
+  // Constant-time comparison
+  if (token.length !== expected.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < token.length; i += 1) {
+    // eslint-disable-next-line no-bitwise
+    mismatch |= token.charCodeAt(i) ^ expected.charCodeAt(i);
+  }
+  return mismatch === 0;
+}
 
 const SYSTEM_PROMPT = `You are a helpful AI assistant on David Hale's personal website (halestorm.dev). David (dmhalejr) is a software developer and engineering leader who:
 
@@ -52,7 +92,46 @@ interface ChatMessage {
   content: string;
 }
 
+// GET /api/chat — issue a CSRF token to the client
+export const GET: APIRoute = async ({ request }) => {
+  if (!isOriginAllowed(request)) {
+    return new Response(
+      JSON.stringify({ error: 'Forbidden.' }),
+      { status: 403, headers: { 'Content-Type': 'application/json' } },
+    );
+  }
+
+  return new Response(
+    JSON.stringify({ token: generateCsrfToken() }),
+    {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store',
+      },
+    },
+  );
+};
+
 export const POST: APIRoute = async ({ request, clientAddress }) => {
+  // Origin check
+  if (!isOriginAllowed(request)) {
+    return new Response(
+      JSON.stringify({ error: 'Forbidden.' }),
+      { status: 403, headers: { 'Content-Type': 'application/json' } },
+    );
+  }
+
+  // CSRF token check
+  const csrfToken = request.headers.get('x-csrf-token');
+  if (!isValidCsrfToken(csrfToken)) {
+    return new Response(
+      JSON.stringify({ error: 'Invalid or missing security token.' }),
+      { status: 403, headers: { 'Content-Type': 'application/json' } },
+    );
+  }
+
+  // Rate limit check
   const ip = clientAddress || 'unknown';
   if (!checkRateLimit(ip)) {
     return new Response(
