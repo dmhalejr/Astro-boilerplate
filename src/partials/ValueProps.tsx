@@ -16,7 +16,7 @@ const ValueProp = ({
 const ValueProps = () => {
   return (
     <Section>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-4">
         <ValueProp
           title="Clear, Scalable Solutions"
           description="I thrive on turning complex technical challenges into simple, scalable solutions that make life easier for both teams and users."
@@ -28,6 +28,10 @@ const ValueProps = () => {
         <ValueProp
           title="Collaboration First"
           description="Great software is built together. I work side-by-side with stakeholders and teams to ensure the process feels collaborative and the outcome exceeds expectations."
+        />
+        <ValueProp
+          title="Human-Centric AI Solutions"
+          description="I help people and teams introduce AI into their workflow — practically, thoughtfully, and with the human experience at the center of every decision."
         />
       </div>
     </Section>

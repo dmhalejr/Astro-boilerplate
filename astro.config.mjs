@@ -3,11 +3,15 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import robotsTxt from 'astro-robots-txt';
+import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://halestorm.dev/',
-  trailingSlash: 'never',
+  output: 'hybrid',
+  adapter: netlify(),
+  // base: '.', // Set a path prefix.
+  site: 'https://halestorm.dev/', // Use to generate your sitemap and canonical URLs in your final build.
+  trailingSlash: 'never', // Use to always append '/' at end of url
   markdown: {
     shikiConfig: {
       theme: 'monokai',
