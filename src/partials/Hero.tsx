@@ -22,9 +22,10 @@ const Hero = () => (
           </h1>
 
           <p className="rise mt-8 max-w-xl text-lg leading-relaxed text-mist [--d:420ms]">
-            I design the system around the model: what an agent can touch, how
-            its work gets checked, and who signs off. That is what turns a demo
-            into something you can merge.
+            I build AI agents that take the busywork off your team: the
+            tickets, the reviews, the jobs nobody was hired to do. They work
+            inside the tools you already use, and a person approves everything
+            they ship.
           </p>
 
           <div className="rise mt-8 flex flex-wrap gap-3 [--d:540ms]">
