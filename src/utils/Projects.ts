@@ -11,13 +11,6 @@ export type ProjectItem = {
 
 export const projects: ProjectItem[] = [
   {
-    name: 'Halestorm Factory',
-    description:
-      'An issue-to-PR agent factory. A labeled GitHub issue goes to headless Claude Code in an isolated git worktree and comes back as a pull request for a human to merge. A second line reviews pull requests with read-only agents whose findings must cite the exact line they are about.',
-    status: 'In development',
-    tags: ['AI agents', 'Claude Code', 'TypeScript', 'Postgres'],
-  },
-  {
     name: 'Timberclove',
     description:
       'Registration software for homeschool co-ops. Families get a fair turn in line, seats are held while they pay, and waitlists, monthly payment plans and direct teacher payouts through Stripe run in one place.',
