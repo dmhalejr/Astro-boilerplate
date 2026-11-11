@@ -22,8 +22,9 @@ const Hero = () => (
           </h1>
 
           <p className="rise mt-8 max-w-xl text-lg leading-relaxed text-mist [--d:420ms]">
-            The agents write the code. They get an allowlist, an isolated
-            worktree and none of the secrets, and a person merges every change.
+            I design the system around the model: what an agent can touch, how
+            its work gets checked, and who signs off. That is what turns a demo
+            into something you can merge.
           </p>
 
           <div className="rise mt-8 flex flex-wrap gap-3 [--d:540ms]">
