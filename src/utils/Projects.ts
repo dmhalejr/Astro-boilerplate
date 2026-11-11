@@ -18,6 +18,14 @@ export const projects: ProjectItem[] = [
     tags: ['AI agents', 'Claude Code', 'TypeScript', 'Postgres'],
   },
   {
+    name: 'Timberclove',
+    description:
+      'Registration software for homeschool co-ops. Families get a fair turn in line, seats are held while they pay, and waitlists, monthly payment plans and direct teacher payouts through Stripe run in one place.',
+    href: 'https://timberclove.com',
+    status: 'Live',
+    tags: ['Next.js', 'TypeScript', 'Stripe', 'Prisma'],
+  },
+  {
     name: 'More Than Words',
     description:
       'An AI-powered AAC board generator for printable and digital communication boards. Communication is a human right, not a premium feature.',

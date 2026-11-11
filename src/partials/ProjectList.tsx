@@ -12,15 +12,21 @@ const isWide = (i: number) => i % 4 === 0 || i % 4 === 3;
 
 const ProjectList = (props: IProjectListProps) => {
   const Heading = props.headingLevel;
+  const shown = projects.slice(0, props.limit);
+  // An odd card left on its own row takes the full width.
+  const spanClass = (i: number) => {
+    if (i === shown.length - 1 && i % 2 === 0) return 'md:col-span-5';
+    return isWide(i) ? 'md:col-span-3' : 'md:col-span-2';
+  };
 
   return (
     <ul className="grid gap-6 md:grid-cols-5">
-      {projects.slice(0, props.limit).map((project, i) => (
+      {shown.map((project, i) => (
         <li
           key={project.name}
           data-reveal
           style={{ transitionDelay: `${(i % 2) * 100}ms` }}
-          className={isWide(i) ? 'md:col-span-3' : 'md:col-span-2'}
+          className={spanClass(i)}
         >
           <article
             className={`group relative flex h-full flex-col overflow-hidden rounded-lg border border-storm-800 bg-storm-900 transition duration-300 ${
