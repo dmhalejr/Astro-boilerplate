@@ -11,19 +11,19 @@ const Hero = () => (
       <div className="flex flex-col-reverse gap-10 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="rise mb-5 text-sm font-semibold uppercase tracking-widest text-bolt">
-            AI agent engineering
+            David Hale · AI agent engineering
           </p>
-          <h1 className="text-6xl font-black leading-none tracking-tighter sm:text-7xl lg:text-8xl">
-            <span className="rise block">Developer.</span>
-            <span className="rise block [--d:120ms]">Father.</span>
+          <h1 className="text-[clamp(1.75rem,9.5vw,3.75rem)] font-black leading-none tracking-tighter md:text-5xl lg:text-7xl">
+            <span className="rise block">I ship software</span>
+            <span className="rise block [--d:120ms]">with AI agents</span>
             <span className="rise strike block text-bolt [--d:240ms]">
-              Husband.
+              on a short leash.
             </span>
           </h1>
 
           <p className="rise mt-8 max-w-xl text-lg leading-relaxed text-mist [--d:420ms]">
-            I build AI agent systems and the guardrails around them: software
-            where agents do the work and people keep the final say.
+            The agents write the code. They get an allowlist, an isolated
+            worktree and none of the secrets, and a person merges every change.
           </p>
 
           <div className="rise mt-8 flex flex-wrap gap-3 [--d:540ms]">
