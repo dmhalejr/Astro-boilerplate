@@ -14,10 +14,10 @@ const Hero = () => (
             David Hale · AI agent engineering
           </p>
           <h1 className="text-[clamp(1.75rem,9.5vw,3.75rem)] font-black leading-none tracking-tighter md:text-5xl lg:text-7xl">
-            <span className="rise block">I ship software</span>
-            <span className="rise block [--d:120ms]">with AI agents</span>
+            <span className="rise block">AI agents</span>
+            <span className="rise block [--d:120ms]">that ship code</span>
             <span className="rise strike block text-bolt [--d:240ms]">
-              on a short leash.
+              you can trust.
             </span>
           </h1>
 
