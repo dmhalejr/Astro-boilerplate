@@ -1,27 +1,166 @@
 ---
-// import type { IFrontmatter } from 'astro-boilerplate-components';
+import type { IFrontmatter } from 'astro-boilerplate-components';
 
 import { Hero } from '@/partials/Hero';
-// import { RecentPosts } from '@/partials/RecentPosts';
-import { Stats } from '@/partials/Stats';
-import { ValueProps } from '@/partials/ValueProps';
+import { PostList } from '@/partials/PostList';
+import { Principles } from '@/partials/Principles';
+import { ProjectList } from '@/partials/ProjectList';
+import { SectionHeading } from '@/partials/SectionHeading';
 import Base from '@/templates/Base.astro';
-// import { CTA } from '@/partials/CTA';
 import { AppConfig } from '@/utils/AppConfig';
-// import { sortByDate } from '@/utils/Posts';
-// import { ProjectList } from '@/partials/ProjectList';
+import { sortByDate } from '@/utils/Posts';
 
-// const allPosts = await Astro.glob<IFrontmatter>('./blog/*.md');
-// const sortedPosts = sortByDate(allPosts);
-// const recentPosts = sortedPosts.slice(0, 3);
+const allPosts = await Astro.glob<IFrontmatter>('./blog/*.md');
+const recentPosts = sortByDate(allPosts).slice(0, 3);
 const { title, description } = AppConfig;
 ---
 
 <Base head={{ title, description }}>
   <Hero />
-  <Stats />
-  <ValueProps />
-  <!-- <RecentPosts postList={recentPosts} /> -->
-  <!-- <ProjectList /> -->
-  <!-- <CTA /> -->
+
+  <section class='mx-auto max-w-5xl px-4 sm:px-6'>
+    <SectionHeading
+      title='Selected work'
+      link={{ label: 'All work', href: '/projects' }}
+    />
+    <ProjectList headingLevel='h3' limit={2} />
+  </section>
+
+  <section class='mx-auto mt-20 max-w-5xl px-4 sm:px-6'>
+    <SectionHeading title='How I build with agents' />
+    <Principles />
+  </section>
+
+  <section class='mx-auto mt-20 max-w-5xl px-4 sm:px-6'>
+    <SectionHeading
+      title='Latest writing'
+      link={{ label: 'All posts', href: '/blog' }}
+    />
+    <PostList postList={recentPosts} headingLevel='h3' />
+  </section>
 </Base>
+
+<script>
+  // Hero backdrop: falling hail with an occasional lightning bolt.
+  type Stone = { x: number; y: number; len: number; speed: number; alpha: number };
+  type Bolt = { points: [number, number][]; life: number };
+
+  const SLANT = 0.35;
+  const BOLT_FRAMES = 14;
+  let stop = () => {};
+
+  function initStorm() {
+    stop();
+    const canvas = document.getElementById('storm-canvas');
+    if (!(canvas instanceof HTMLCanvasElement)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    let stones: Stone[] = [];
+    let bolt: Bolt | null = null;
+    let nextStrike = performance.now() + 1200;
+    let frameId = 0;
+    let onScreen = true;
+
+    const newStone = (anywhere: boolean): Stone => ({
+      x: Math.random() * (width + height * SLANT),
+      y: anywhere ? Math.random() * height : -20,
+      len: 8 + Math.random() * 14,
+      speed: 3 + Math.random() * 4,
+      alpha: 0.08 + Math.random() * 0.22,
+    });
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = canvas.clientWidth;
+      height = canvas.clientHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stones = Array.from({ length: Math.round(width / 14) }, () =>
+        newStone(true)
+      );
+    };
+
+    const newBolt = (): Bolt => {
+      let x = width * (0.55 + Math.random() * 0.4);
+      let y = 0;
+      const points: [number, number][] = [[x, y]];
+      while (y < height * 0.7) {
+        x += (Math.random() - 0.5) * 70;
+        y += 20 + Math.random() * 40;
+        points.push([x, y]);
+      }
+      return { points, life: BOLT_FRAMES };
+    };
+
+    const draw = (now: number) => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.lineCap = 'round';
+
+      ctx.lineWidth = 1.5;
+      stones.forEach((stone, i) => {
+        ctx.strokeStyle = `rgb(138 151 180 / ${stone.alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(stone.x, stone.y);
+        ctx.lineTo(stone.x - stone.len * SLANT, stone.y + stone.len);
+        ctx.stroke();
+        stone.x -= stone.speed * SLANT;
+        stone.y += stone.speed;
+        if (stone.y > height) stones[i] = newStone(false);
+      });
+
+      if (now > nextStrike) {
+        bolt = newBolt();
+        nextStrike = now + 5000 + Math.random() * 7000;
+      }
+      if (bolt) {
+        const strength = bolt.life / BOLT_FRAMES;
+        ctx.fillStyle = `rgb(255 216 74 / ${0.04 * strength})`;
+        ctx.fillRect(0, 0, width, height);
+        ctx.strokeStyle = `rgb(255 216 74 / ${0.7 * strength})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        bolt.points.forEach(([x, y], i) =>
+          i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
+        );
+        ctx.stroke();
+        bolt.life -= 1;
+        if (bolt.life <= 0) bolt = null;
+      }
+
+      frameId = requestAnimationFrame(draw);
+    };
+
+    const setRunning = () => {
+      cancelAnimationFrame(frameId);
+      if (onScreen && !document.hidden) frameId = requestAnimationFrame(draw);
+    };
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
+    const viewObserver = new IntersectionObserver(([entry]) => {
+      onScreen = entry?.isIntersecting ?? false;
+      setRunning();
+    });
+    viewObserver.observe(canvas);
+    document.addEventListener('visibilitychange', setRunning);
+
+    resize();
+    setRunning();
+
+    stop = () => {
+      cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+      viewObserver.disconnect();
+      document.removeEventListener('visibilitychange', setRunning);
+      stop = () => {};
+    };
+  }
+
+  document.addEventListener('astro:page-load', initStorm);
+  document.addEventListener('astro:before-swap', () => stop());
+</script>
