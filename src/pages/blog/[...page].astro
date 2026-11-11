@@ -3,17 +3,11 @@ import type {
   FrontmatterPage,
   IFrontmatter,
 } from 'astro-boilerplate-components';
-import {
-  NewerOlderPagination,
-  PaginationHeader,
-  Section,
-} from 'astro-boilerplate-components';
 
+import { PostList } from '@/partials/PostList';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
 import { sortByDate } from '@/utils/Posts';
-import { BlogGallery } from '@/partials/BlogGallery';
-
 
 type GetStaticPaths = {
   paginate: any;
@@ -32,25 +26,38 @@ interface Props {
 }
 
 const { page } = Astro.props as Props;
-const titleSuffix = ` - ${AppConfig.site_name}`;
-const titleBase = `Blog page ${page.currentPage}`;
-const title = titleBase + titleSuffix;
-const description =
-  'Pagination example built with Astro styled with Tailwind CSS.';
+const title = `Blog page ${page.currentPage} - ${AppConfig.site_name}`;
+const description = 'Posts on software engineering by David Hale.';
+const pagerClass =
+  'text-sm font-medium text-mist transition-colors hover:text-bolt';
 ---
 
 <Base head={{ title, description }}>
-  <Section>
-    <PaginationHeader title='Blog' description='Musings' />
-  </Section>
+  <section class='mx-auto max-w-5xl px-4 pt-12 sm:px-6 sm:pt-16'>
+    <h1 class='text-5xl font-black tracking-tighter sm:text-6xl'>Blog</h1>
+    <p class='mb-10 mt-4 max-w-xl text-lg text-mist'>
+      Notes on testing, tooling, and building software.
+    </p>
 
-  <Section>
-    <BlogGallery postList={page.data} />
-  </Section>
+    <PostList postList={page.data} headingLevel='h2' />
 
-  <Section>
-    <NewerOlderPagination page={page} />
-  </Section>
-
-  <!-- <CTA /> -->
+    {
+      (page.url.prev || page.url.next) && (
+        <nav aria-label='Pagination' class='mt-8 flex justify-between'>
+          {page.url.prev ? (
+            <a href={page.url.prev} class={pagerClass}>
+              <span aria-hidden='true'>←</span> Newer posts
+            </a>
+          ) : (
+            <span />
+          )}
+          {page.url.next && (
+            <a href={page.url.next} class={pagerClass}>
+              Older posts <span aria-hidden='true'>→</span>
+            </a>
+          )}
+        </nav>
+      )
+    }
+  </section>
 </Base>

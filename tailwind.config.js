@@ -5,7 +5,20 @@ module.exports = {
     './node_modules/astro-boilerplate-components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        // Storm front palette: deep navy surfaces, one lightning accent.
+        storm: {
+          950: '#0b1220',
+          900: '#131d33',
+          800: '#1a2540',
+          700: '#2a3759',
+        },
+        ink: '#e8eefc',
+        mist: '#8a97b4',
+        bolt: '#ffd84a',
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
