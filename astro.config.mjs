@@ -8,6 +8,9 @@ import robotsTxt from 'astro-robots-txt';
 export default defineConfig({
   site: 'https://halestorm.dev/',
   trailingSlash: 'never',
+  redirects: {
+    '/contact': 'https://linkedin.com/in/dmhalejr',
+  },
   markdown: {
     shikiConfig: {
       theme: 'monokai',
