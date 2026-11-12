@@ -1,0 +1,159 @@
+---
+import Base from '@/templates/Base.astro';
+import { AppConfig } from '@/utils/AppConfig';
+import { resume } from '@/utils/Resume';
+
+const title = `Resume - ${AppConfig.site_name}`;
+const description = `${resume.name}: ${resume.headline}, ${resume.focus}. Experience across healthcare SaaS, clinical data platforms and agentic AI.`;
+
+const sectionHeading = 'mb-6 text-2xl font-bold tracking-tight';
+const chip =
+  'rounded-full border border-storm-700 px-2.5 py-1 text-xs text-mist';
+
+// Structured data so search engines understand who this page is about.
+// Contact details are deliberately left out.
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: resume.name,
+  jobTitle: `${resume.headline}, ${resume.focus}`,
+  url: 'https://halestorm.dev',
+  image: 'https://halestorm.dev/images/profile_pic.jpeg',
+  sameAs: [resume.linkedin, 'https://github.com/dmhalejr'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Lebanon',
+    addressRegion: 'TN',
+    addressCountry: 'US',
+  },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: resume.education.school },
+  knowsAbout: resume.skills.flatMap((group) => group.items),
+};
+---
+
+<Base head={{ title, description }}>
+  <script slot='head' is:inline type='application/ld+json' set:html={JSON.stringify(person)} />
+
+  <div class='resume'>
+    <section class='mx-auto max-w-5xl px-4 pt-12 sm:px-6 sm:pt-16'>
+      <p class='rise mb-4 text-sm font-semibold uppercase tracking-widest text-bolt'>
+        Resume
+      </p>
+      <h1 class='rise text-5xl font-black tracking-tighter sm:text-6xl'>
+        {resume.name}
+      </h1>
+      <p class='rise mt-3 text-xl font-semibold [--d:120ms]'>
+        {resume.headline}
+        <span class='text-bolt'> · {resume.focus}</span>
+      </p>
+      <p class='rise mt-2 text-mist [--d:180ms]'>{resume.location}</p>
+
+      <div class='rise mt-8 flex flex-wrap items-center gap-3 [--d:260ms] print:hidden'>
+        <a
+          href={resume.pdf}
+          download
+          class='rounded-full bg-bolt px-5 py-2.5 text-sm font-semibold text-storm-950 transition hover:-translate-y-0.5 hover:bg-ink'
+        >
+          Download PDF
+        </a>
+        <a
+          href={resume.linkedin}
+          class='rounded-full border border-storm-700 px-5 py-2.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-bolt hover:text-bolt'
+        >
+          Message me on LinkedIn
+        </a>
+      </div>
+
+      <p class='mt-12 max-w-3xl text-lg leading-relaxed text-mist'>
+        {resume.summary}
+      </p>
+    </section>
+
+    <section class='mx-auto mt-16 max-w-5xl px-4 sm:px-6' aria-labelledby='skills-heading'>
+      <h2 id='skills-heading' class={sectionHeading}>Technical skills</h2>
+      <dl class='grid gap-8 sm:grid-cols-2'>
+        {
+          resume.skills.map((group) => (
+            <div>
+              <dt class='text-sm font-semibold uppercase tracking-widest text-bolt'>
+                {group.label}
+              </dt>
+              <dd>
+                <ul class='mt-3 flex flex-wrap gap-2'>
+                  {group.items.map((item) => (
+                    <li class={chip}>{item}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class='mx-auto mt-16 max-w-5xl px-4 sm:px-6' aria-labelledby='experience-heading'>
+      <h2 id='experience-heading' class={sectionHeading}>Experience</h2>
+      <ol>
+        {
+          resume.experience.map((role) => (
+            <li class='grid gap-2 border-t border-storm-800 py-8 md:grid-cols-[11rem_1fr] md:gap-8 print:break-inside-avoid'>
+              <p class='text-sm text-mist md:pt-1.5'>
+                {role.start} – {role.end}
+              </p>
+              <div>
+                <h3 class='text-xl font-bold tracking-tight'>{role.company}</h3>
+                <p class='font-medium text-bolt'>{role.title}</p>
+                <ul class='mt-3 list-disc space-y-2 pl-5 leading-relaxed text-mist marker:text-bolt'>
+                  {role.bullets.map((bullet) => (
+                    <li>{bullet}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class='mx-auto max-w-5xl px-4 sm:px-6' aria-labelledby='education-heading'>
+      <h2 id='education-heading' class={`${sectionHeading} border-t border-storm-800 pt-8`}>
+        Education
+      </h2>
+      <p>
+        <strong class='font-bold'>{resume.education.school}</strong>
+        <span class='text-mist'>
+          {' '}· {resume.education.degree} · {resume.education.years}
+        </span>
+      </p>
+    </section>
+
+    <section class='mx-auto mt-16 max-w-5xl px-4 sm:px-6'>
+      <p class='border-t border-storm-800 pt-8 text-lg text-mist'>
+        The best way to reach me is on
+        <a
+          href={resume.linkedin}
+          class='font-semibold text-bolt underline-offset-4 hover:underline'
+        >
+          LinkedIn</a
+        >.
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style is:global>
+  /* Print as a plain black-on-white document. */
+  @media print {
+    .resume,
+    .resume * {
+      color: #111 !important;
+      border-color: #ccc !important;
+      animation: none !important;
+    }
+
+    .resume .rise {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>

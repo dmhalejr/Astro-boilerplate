@@ -1,8 +1,8 @@
 export const AppConfig = {
-  site_name: 'Halestorm Dev',
-  title: 'Halestorm Dev',
+  site_name: 'David Hale',
+  title: 'David Hale | Senior Software Engineer, Agentic AI & Backend Systems',
   description:
-    'David Hale builds AI agent systems and developer tools. Projects and writing.',
+    'Senior software engineer building agentic AI and backend systems for healthcare. Resume, projects and writing by David Hale.',
   author: 'David Hale',
   locale_region: 'en-us',
   locale: 'en',
