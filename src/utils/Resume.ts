@@ -19,7 +19,7 @@ export type SkillGroup = {
 
 export const resume = {
   name: 'David Hale',
-  headline: 'Senior Software Engineer',
+  headline: 'Senior Backend Engineer',
   focus: 'Agentic AI & Backend Systems',
   location: 'Lebanon, TN (Remote)',
   pdf: '/David_Hale_Resume.pdf',
