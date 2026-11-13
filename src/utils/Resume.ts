@@ -81,7 +81,7 @@ export const resume = {
     {
       company: 'Aeroflow Health',
       title: 'Senior Backend Engineer',
-      start: 'Jan 2026',
+      start: 'Feb 2026',
       end: 'Present',
       bullets: [
         'Build and orchestrate healthcare agents with Strands Agents and Amazon Bedrock. Use Bedrock Knowledge Bases for retrieval over structured healthcare data.',
@@ -92,7 +92,7 @@ export const resume = {
       company: 'Care Access',
       title: 'Senior Software Engineer',
       start: 'Aug 2024',
-      end: 'Dec 2025',
+      end: 'Feb 2026',
       bullets: [
         'Led 6+ engineers and contractors across Care Console, Member Portal, and Member Services Portal. Owned release schedules and delivery from design through production.',
         'Improved release cadence by roughly 25-50% by standardizing team routines and reducing rework through shorter feedback loops.',
@@ -121,7 +121,7 @@ export const resume = {
       company: 'EvidenceCare',
       title: 'Senior SDE / SDE II',
       start: 'Feb 2020',
-      end: 'Sep 2021',
+      end: 'Aug 2021',
       bullets: [
         'Designed HL7 FHIR and CDS Hooks integrations across 7-10 hospital systems. Built analytics to measure client ROI and feature flags to support staged enterprise rollouts.',
       ],
