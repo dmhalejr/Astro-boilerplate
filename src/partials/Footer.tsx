@@ -1,6 +1,7 @@
 import { AppConfig } from '@/utils/AppConfig';
 
 const links = [
+  { label: 'About', href: '/about' },
   { label: 'Resume', href: '/resume' },
   { label: 'GitHub', href: 'https://github.com/dmhalejr' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/dmhalejr' },
