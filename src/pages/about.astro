@@ -1,0 +1,236 @@
+---
+import type { IFrontmatter } from 'astro-boilerplate-components';
+
+import { PostList } from '@/partials/PostList';
+import { ProjectList } from '@/partials/ProjectList';
+import { SectionHeading } from '@/partials/SectionHeading';
+import Base from '@/templates/Base.astro';
+import { AppConfig } from '@/utils/AppConfig';
+import { sortByDate } from '@/utils/Posts';
+
+const title = `About - ${AppConfig.site_name}`;
+const description =
+  'Who David Hale is, how a QA engineer ended up building AI agents for healthcare, and the values behind the work.';
+
+const allPosts = await Astro.glob<IFrontmatter>('./blog/*.md');
+const recentPosts = sortByDate(allPosts).slice(0, 3);
+
+const story = [
+  {
+    years: '2006 – 2011',
+    title: 'Trevecca Nazarene University',
+    body: 'A degree in Information Technology, and most of my free time in the percussion ensemble, wind ensemble and jazz band. Keeping time for other people turned out to be good practice.',
+  },
+  {
+    years: '2012 – 2017',
+    title: 'Breaking software for a living',
+    body: 'I started in QA at Emma, then ThreatQuotient, then LifeWay. Test plans, Selenium grids, API tests, security and accessibility checks. I learned how software fails before I learned how to build it.',
+  },
+  {
+    years: '2017 – 2020',
+    title: 'Crossing over',
+    body: 'At LifeWay I moved from testing the product to building it. At Lonely Planet I sat between both worlds, writing the tooling that told teams whether their work held up.',
+  },
+  {
+    years: '2020 – 2025',
+    title: 'Healthcare',
+    body: 'EvidenceCare put me inside hospital systems with HL7 FHIR and CDS Hooks. OneStudyTeam and Care Access put me inside clinical trials. This is where I learned the work is never just code.',
+  },
+  {
+    years: '2026 – now',
+    title: 'Agents',
+    body: 'At Aeroflow Health I build healthcare agents on Amazon Bedrock and Strands, and the integrations behind them. On my own time I build the guardrails I wish every agent came with.',
+  },
+];
+
+const values = [
+  {
+    title: 'Good software is stewardship.',
+    body: 'Every field, status, integration and workflow eventually lands on a real person trying to do their job. The best systems are not just clever. They are understandable and supportable, and they make room for the next person.',
+  },
+  {
+    title: 'Build things that hold up.',
+    body: 'I am less interested than I used to be in looking busy. Software systems, working relationships, family rhythms: I would rather have the ones that last than the ones that demo well.',
+  },
+  {
+    title: 'A person makes the final call.',
+    body: 'An agent can open the pull request. It cannot merge it. I would rather build that discipline into the system than trust my mood on the fifth review of the day.',
+  },
+  {
+    title: 'Respect the conditions.',
+    body: 'You cannot control the weather, force visibility, or pretend things are better than they are. You assess, adjust, and keep moving with the information you have. True on a trail. True in a codebase.',
+  },
+];
+
+const facts = [
+  {
+    title: 'I started in QA',
+    body: 'My first five years in software were spent finding out how it breaks. It still shapes everything: I want the evidence before I want the answer.',
+  },
+  {
+    title: 'I was a percussionist',
+    body: 'Percussion ensemble, wind ensemble and jazz band, all through college. The drummer is the one who notices when the whole band is rushing.',
+  },
+  {
+    title: 'Yes, it is Halestorm',
+    body: 'Hale, plus storm. It has been in my bio for years, and now it is the name on the door.',
+  },
+  {
+    title: 'I hike',
+    body: 'A foggy overlook after a hard stretch of trail has a way of making things simple. That lesson keeps showing up for me in engineering, in leadership and in family.',
+  },
+  {
+    title: 'Husband and dad first',
+    body: 'My kids will grow up with a confident answer one question away. I want them to know what it feels like to work something out, be wrong, and fix it themselves.',
+  },
+  {
+    title: 'My side projects have a point',
+    body: 'Registration for homeschool co-ops. Communication boards for people who cannot speak. Communication is a human right, not a premium feature.',
+  },
+];
+
+const eyebrow = 'text-sm font-semibold uppercase tracking-widest text-bolt';
+---
+
+<Base head={{ title, description }}>
+  <section class='mx-auto max-w-5xl px-4 pt-12 sm:px-6 sm:pt-20'>
+    <div class='flex flex-col-reverse gap-10 md:flex-row md:items-center md:justify-between'>
+      <div>
+        <p class={`rise mb-5 ${eyebrow}`}>About</p>
+        <h1 class='text-[clamp(1.75rem,9.5vw,3.75rem)] font-black leading-none tracking-tighter md:text-5xl lg:text-6xl'>
+          <span class='rise block'>Hi, I'm David Hale.</span>
+          <span class='rise strike block text-bolt [--d:160ms]'>I build agents you can trust.</span>
+        </h1>
+        <p class='rise mt-8 max-w-xl text-lg leading-relaxed text-mist [--d:320ms]'>
+          I take the busywork off engineering teams with AI agents, and I build
+          the guardrails that keep a person in charge of what ships. I do it in
+          healthcare, where a bad answer lands on a real patient.
+        </p>
+        <p class='rise mt-4 max-w-xl text-lg leading-relaxed text-mist [--d:400ms]'>
+          Husband. Father. Code maker. Halestorm.
+        </p>
+      </div>
+
+      <div class='photo-ring rise relative size-36 shrink-0 rounded-full p-1.5 [--d:240ms] md:size-56'>
+        <img
+          src='/images/profile_pic.jpeg'
+          alt='David Hale'
+          width='224'
+          height='224'
+          class='relative size-full rounded-full object-cover ring-[3px] ring-storm-950'
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class='mx-auto mt-20 max-w-5xl px-4 sm:px-6' aria-labelledby='story-heading'>
+    <h2 id='story-heading' class='mb-2 text-2xl font-bold tracking-tight'>
+      How I got here
+    </h2>
+    <p class='mb-6 max-w-3xl leading-relaxed text-mist'>
+      I did not start out building software. I started out breaking it. That
+      turned out to be the right order.
+    </p>
+    <ol>
+      {
+        story.map((chapter) => (
+          <li
+            data-reveal
+            class='grid gap-2 border-t border-storm-800 py-7 md:grid-cols-[11rem_1fr] md:gap-8'
+          >
+            <p class='text-sm tabular-nums text-mist md:pt-1.5'>{chapter.years}</p>
+            <div>
+              <h3 class='text-xl font-bold tracking-tight'>{chapter.title}</h3>
+              <p class='mt-2 max-w-2xl leading-relaxed text-mist'>{chapter.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <p class='border-t border-storm-800 pt-6 text-mist'>
+      The full version, with dates and details, is on my
+      <a href='/resume' class='font-semibold text-bolt underline-offset-4 hover:underline'>resume</a>.
+    </p>
+  </section>
+
+  <section class='mx-auto mt-20 max-w-5xl px-4 sm:px-6' aria-labelledby='values-heading'>
+    <h2 id='values-heading' class='mb-6 text-2xl font-bold tracking-tight'>
+      What I believe
+    </h2>
+    <ol class='grid gap-x-8 gap-y-10 md:grid-cols-2'>
+      {
+        values.map((value, i) => (
+          <li
+            data-reveal
+            style={`transition-delay: ${(i % 2) * 100}ms`}
+            class='border-t border-storm-700 pt-5'
+          >
+            <p aria-hidden='true' class='text-sm tabular-nums text-bolt'>0{i + 1}</p>
+            <h3 class='mt-2 text-lg font-semibold tracking-tight'>{value.title}</h3>
+            <p class='mt-2 leading-relaxed text-mist'>{value.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class='mx-auto mt-20 max-w-5xl px-4 sm:px-6'>
+    <SectionHeading
+      title="What I'm building"
+      link={{ label: 'All work', href: '/projects' }}
+    />
+    <ProjectList headingLevel='h3' />
+  </section>
+
+  <section class='mx-auto mt-20 max-w-5xl px-4 sm:px-6' aria-labelledby='facts-heading'>
+    <h2 id='facts-heading' class='mb-6 text-2xl font-bold tracking-tight'>
+      Not on the resume
+    </h2>
+    <ul class='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+      {
+        facts.map((fact, i) => (
+          <li
+            data-reveal
+            style={`transition-delay: ${(i % 3) * 80}ms`}
+            class='rounded-lg border border-storm-800 bg-storm-900 p-6'
+          >
+            <h3 class='text-lg font-semibold tracking-tight'>{fact.title}</h3>
+            <p class='mt-2 leading-relaxed text-mist'>{fact.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class='mx-auto mt-20 max-w-5xl px-4 sm:px-6'>
+    <SectionHeading
+      title='Latest writing'
+      link={{ label: 'All posts', href: '/blog' }}
+    />
+    <PostList postList={recentPosts} headingLevel='h3' />
+  </section>
+
+  <section class='mx-auto mt-20 max-w-5xl px-4 sm:px-6'>
+    <div class='rounded-lg border border-storm-700 bg-storm-900 p-8 sm:p-10'>
+      <h2 class='text-2xl font-bold tracking-tight'>Want to talk?</h2>
+      <p class='mt-2 max-w-2xl leading-relaxed text-mist'>
+        If you are putting agents in front of work that matters and want them to
+        earn it, I would like to hear about it.
+      </p>
+      <div class='mt-6 flex flex-wrap gap-3'>
+        <a
+          href='https://linkedin.com/in/dmhalejr'
+          class='rounded-full bg-bolt px-5 py-2.5 text-sm font-semibold text-storm-950 transition hover:-translate-y-0.5 hover:bg-ink'
+        >
+          Message me on LinkedIn
+        </a>
+        <a
+          href='/resume'
+          class='rounded-full border border-storm-700 px-5 py-2.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-bolt hover:text-bolt'
+        >
+          View resume
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

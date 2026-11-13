@@ -18,6 +18,9 @@ const Navbar = () => (
       </a>
 
       <div className="flex items-center gap-1 sm:gap-2">
+        <a href="/about" className={linkClass}>
+          About
+        </a>
         <a href="/projects" className={linkClass}>
           Work
         </a>
