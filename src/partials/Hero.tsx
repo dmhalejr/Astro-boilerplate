@@ -11,7 +11,7 @@ const Hero = () => (
       <div className="flex flex-col-reverse gap-10 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="rise mb-5 text-sm font-semibold uppercase tracking-widest text-bolt">
-            David Hale · Senior Software Engineer
+            David Hale · Senior Backend Engineer
           </p>
           <h1 className="text-[clamp(1.75rem,9.5vw,3.75rem)] font-black leading-none tracking-tighter md:text-5xl lg:text-7xl">
             <span className="rise block">AI agents</span>
